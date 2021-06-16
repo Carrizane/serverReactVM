@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center">CRUD Simple</h1>
+      <h1 className="text-center">TODO List</h1>
       <hr />
       <div className="row">
         <div className="col-8">
