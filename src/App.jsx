@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import shortid from "shortid";
-import http from "./http-common"
-import axios from "axios";
 
 function App() {
   const [tarea, setTarea] = useState("");
@@ -49,11 +47,15 @@ function App() {
     setError(null);
   };
 
-  const getTasks = () => {
-    return axios.get('http://10.147.20.77:5000/').then((response) => {
-      console.log(response);
-    });
+  const getTasks = async () => {
+    const res = await fetch('http://10.147.20.77:5000/');
+    const data = await res.json();
+    setTareas([...data])
   };
+  
+  useEffect(() => {
+    getTasks();
+  }, [])
 
   return (
     <div className="container mt-5">
