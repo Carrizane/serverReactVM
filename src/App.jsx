@@ -16,6 +16,7 @@ function App() {
       return;
     }
     setTareas([...tareas, { id: shortid.generate(), task: tarea }]);
+    this.postTasks(shortid.generate(), tarea);
     setTarea("")
     setError(null)
   };
@@ -44,6 +45,15 @@ function App() {
     setTarea("");
     setId("");
     setError(null);
+  };
+
+  const postTasks = (name, code) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, code: code })
+    };
+    const response = await fetch('http://10.147.20.77:5000/'. requestOptions);
   };
 
   return (
