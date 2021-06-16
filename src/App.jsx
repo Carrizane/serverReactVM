@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import shortid from "shortid";
+import http from "./http-common"
+import axios from "axios";
 
 function App() {
   const [tarea, setTarea] = useState("");
@@ -16,7 +18,7 @@ function App() {
       return;
     }
     setTareas([...tareas, { id: shortid.generate(), task: tarea }]);
-    this.postTasks(shortid.generate(), tarea);
+    this.getTasks();
     setTarea("")
     setError(null)
   };
@@ -47,13 +49,10 @@ function App() {
     setError(null);
   };
 
-  const postTasks = (name, code) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: name, code: code })
-    };
-    const response = await fetch('http://10.147.20.77:5000/'. requestOptions);
+  const getTasks = () => {
+    return axios.get('http://10.147.20.77:5000/').then((response) => {
+      console.log(response);
+    });
   };
 
   return (
@@ -87,7 +86,7 @@ function App() {
         </div>
         <div className="col-4">
           <h4 className="text-center">{edit ? "Editar" : "Agregar"}</h4>
-          <form className="d-grid" onSubmit={edit ? updateTask : addTask}>
+          <form className="d-grid" onSubmit={edit ? updateTask : getTasks}>
             {error ? <span className="text-danger">{error}</span> : null}
             <input
               type="text"
